@@ -14,9 +14,9 @@ do
         < ../MIN_BP_HRC_Experiments/Experiment_3/100_-_${nh}_-_10_-_100_-_3_-_5_-_false_-_5_-_5_-_Iteration_$i.txt \
         > tmp.dzn \
         && mzn2fzn ../hrc-minizinc/hrc.mzn tmp.dzn -o tmp.fzn \
-        && fzn_chuffed tmp.fzn | solns2out ../hrc-minizinc/hrc.ozn \
+        && fzn_chuffed -time_out=$CHUFFED_TIMEOUT tmp.fzn | solns2out ../hrc-minizinc/hrc.ozn \
         > tmp.out &&
-        awk '/UNSAT/ {exit 1} /[0-9]/ {result=$1;result_exists=1} END {if (result_exists) print result}' tmp.out)
+        awk '/UNSAT/ {exit 1} /[0-9]/ {result=$1;result_exists=1} END {if (NR==0) {print -1;exit} else if (result_exists) print result}' tmp.out)
     do
       ((numbp += 1))
     done
