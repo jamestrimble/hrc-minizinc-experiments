@@ -4,7 +4,7 @@ export PATH=$PATH:../../Programs/minizinc/minizinc-2.0.12/bin:../../Programs/chu
 
 for sz in 5 7 9 11 13 15
 do
-  for i in $(seq 34 34)
+  for i in $(seq 1 1000)
   do
     echo ${sz}0
     echo $i
