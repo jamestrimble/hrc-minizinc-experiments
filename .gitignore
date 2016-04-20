@@ -1,3 +1,4 @@
 results/
 .R*
 plot/output/
+*.zip
