@@ -48,15 +48,17 @@ for (e in experiments) {
 	check_expected(gsub("[^0-9]", "", e), e)
 }
 
-# Where timeouts occurred, set time to 1800 seconds
-d$time[d$time >= 1800] <- 1800
-d$timeout <- d$time == 1800
+# Where timeouts occurred, set time to 900 seconds
+d$time[d$time >= 900] <- 900
+d$timeout <- d$time == 900
 
 # Show timeouts
 timeout_runs <- d[d$timeout, ]
 timeout_runs
 write.csv(timeout_runs, "output/timeout_runs.csv")
 print(paste("Number of timeouts:", nrow(timeout_runs)))
+
+write.csv(d, "output/all_data.csv")
 
 # Summarise results
 mean_times <- d %>%
@@ -126,9 +128,10 @@ for (solvable in c(1,0)) {
 par(op)
 dev.off()
 
-# Overall average run times (remember that timeouts are recorded as 1800s)
+# Overall average run times (remember that timeouts are recorded as 900s)
 print(mean(d$time[d$uses_presolve]))
 print(mean(d$time[!d$uses_presolve]))
 print(mean(iain$time))
 print(sum(d$time[!d$uses_presolve]) / sum(iain$time))
+print(sum(iain$time) / sum(d$time[!d$uses_presolve]))
 print(sum(iain$time) / sum(d$time[d$uses_presolve]))
